@@ -2,43 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>pastebox.js</title>
-    <script src="Scripts/jquery-2.0.2.min.js"></script>
+    <link href="styles.css" rel="stylesheet" />
+    <script src="scripts/jquery-2.0.2.min.js"></script>
     <script src="pastebox.js"></script>
 </head>
 <body>
-    <input id="pastebox" placeholder="Paste URL here..." />
-    <div id="preview" style="display: none;"></div>
+
+    <div id="container">
+        <h1>pa.stos.io</h1>
+        <form>
+            <input value="http://www.google.com" /><br />
+            <input id="pastebox" placeholder="paste here..." />
+        </form>
+        <div id="preview" style="display: none;"></div>
+    </div>
 
     <script type="text/javascript">
+
         $(function () {
 
             $('#pastebox').pastebox({
-                url: 'http://crawl.er/',
-                callback: function (e) {
+                crawlerUrl: 'http://crawl.er/',
+                onCrawlDone: function (e) {
                     $('#preview').html(
-                        $('div')
+                        $('<div>').append(
+                            $('<div class="image-container">')
                             .append($('<img/>', {
                                 src: e.url,
                                 alt: e.description
                             }))
-                            .append($('<p/>', {
-                                html: e.description
-                            }))
-                            .html()
+                        ).append($('<p/>', {
+                            html: e.description
+                        })).html()
                     ).show();
                 }
-            }).focus(function () {
-                var $this = $(this);
-                $this.select();
-                // Work around Chrome's little problem
-                $this.mouseup(function () {
-                    // Prevent further mouseup intervention
-                    $this.unbind("mouseup");
-                    return false;
-                });
-            }).focus();
+            });
 
         });
+
     </script>
 </body>
 </html>
