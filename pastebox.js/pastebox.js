@@ -44,9 +44,9 @@
             $(elem).paste(function (url) {
                 if (urlRegex.test(url)) {
                     if (typeof (settings.onCrawlDone) == "function") {
-                        settings.onCrawlDone({
-                            url: 'http://i.space.com/images/i/000/029/903/original/noctilucent-clouds-northern-ireland.jpg',
-                            description: "Wednesday, June 19, 2013: Astrophotographer Declan O'Doherty sent in a photo of noctilucent clouds (NLC) taken in County Derry, N. Ireland, on the evening of June 5-6, 2013."
+                        $.ajax({
+                            url: settings.crawlerUrl + "?url=" + encodeURIComponent(url),
+                            success: settings.onCrawlDone
                         });
                     }
                 }
